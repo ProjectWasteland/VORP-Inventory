@@ -67,8 +67,7 @@ namespace vorpinventory_sv
         private async void itemsConfig(int player)
         {
             await Delay(5000);
-            PlayerList pl = new PlayerList();
-            Player p = pl[player];
+            Player p = Players[player];
             string identifier = "steam:" + p.Identifiers["steam"];
             try{
                 foreach (KeyValuePair<string, JToken> item in (JObject)config["startItems"][0])

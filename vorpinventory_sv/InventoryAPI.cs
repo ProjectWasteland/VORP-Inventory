@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Dynamic;
+using System.Net.NetworkInformation;
 using CitizenFX.Core.Native;
 using System.Threading.Tasks;
 
@@ -62,8 +63,7 @@ namespace vorpinventory_sv
 
         private void canCarryAmountWeapons(int source, int quantity, CallbackDelegate cb)
         {
-            PlayerList pl = new PlayerList();
-            Player p = pl[source];
+            Player p = Players[source];
             string identifier = "steam:" + p.Identifiers["steam"];
             dynamic CoreUser = vorpinventory_sv.CORE.getUser(source).getUsedCharacter;
             int charIdentifier = CoreUser.charIdentifier;
@@ -88,8 +88,7 @@ namespace vorpinventory_sv
 
         private void canCarryAmountItem(int source, int quantity, CallbackDelegate cb)
         {
-            PlayerList pl = new PlayerList();
-            Player p = pl[source];
+            Player p = Players[source];
             string identifier = "steam:" + p.Identifiers["steam"];
             if (ItemDatabase.usersInventory.ContainsKey(identifier) && Config.MaxItems != -1)
             {
@@ -112,8 +111,7 @@ namespace vorpinventory_sv
 
         private void canCarryItem(int source, string itemName, int quantity, CallbackDelegate cb)
         {
-            PlayerList pl = new PlayerList();
-            Player p = pl[source];
+            Player p = Players[source];
             string identifier = "steam:" + p.Identifiers["steam"];
 
             int limit = ItemDatabase.svItems[itemName].getLimit();
@@ -234,8 +232,7 @@ namespace vorpinventory_sv
 
         private void getInventory(int source, CallbackDelegate cb)
         {
-            PlayerList pl = new PlayerList();
-            Player p = pl[source];
+            Player p = Players[source];
             string identifier = "steam:" + p.Identifiers["steam"];
             if (ItemDatabase.usersInventory.ContainsKey(identifier))
             {
@@ -291,8 +288,7 @@ namespace vorpinventory_sv
 
         private void subComponent(int player, int weaponId, string component, CallbackDelegate function)
         {
-            PlayerList pl = new PlayerList();
-            Player p = pl[player];
+            Player p = Players[player];
             string identifier = "steam:" + p.Identifiers["steam"];
 
             if (ItemDatabase.userWeapons.ContainsKey(weaponId))
@@ -316,8 +312,7 @@ namespace vorpinventory_sv
 
         private void addComponent(int player, int weaponId, string component, CallbackDelegate function)
         {
-            PlayerList pl = new PlayerList();
-            Player p = pl[player];
+            Player p = Players[player];
             string identifier = "steam:" + p.Identifiers["steam"];
 
             if (ItemDatabase.userWeapons.ContainsKey(weaponId))
@@ -342,8 +337,7 @@ namespace vorpinventory_sv
 
         private void getUserWeapon(int player, CallbackDelegate function, int weapId)
         {
-            PlayerList pl = new PlayerList();
-            Player p = pl[player];
+            Player p = Players[player];
             string identifier = "steam:" + p.Identifiers["steam"];
 
             Dictionary<string, dynamic> weapons = new Dictionary<string, dynamic>();
@@ -366,8 +360,7 @@ namespace vorpinventory_sv
 
         private void getUserWeapons(int player, CallbackDelegate function)
         {
-            PlayerList pl = new PlayerList();
-            Player p = pl[player];
+            Player p = Players[player];
             string identifier = "steam:" + p.Identifiers["steam"];
             int charIdentifier;
             try
@@ -408,8 +401,7 @@ namespace vorpinventory_sv
 
         private void getWeaponBullets(int player, CallbackDelegate function, int weaponId)
         {
-            PlayerList pl = new PlayerList();
-            Player p = pl[player];
+            Player p = Players[player];
             string identifier = "steam:" + p.Identifiers["steam"];
 
             if (ItemDatabase.userWeapons.ContainsKey(weaponId))
@@ -423,8 +415,7 @@ namespace vorpinventory_sv
 
         private void getWeaponComponents(int player, CallbackDelegate function, int weaponId)
         {
-            PlayerList pl = new PlayerList();
-            Player p = pl[player];
+            Player p = Players[player];
             string identifier = "steam:" + p.Identifiers["steam"];
 
             if (ItemDatabase.userWeapons.ContainsKey(weaponId))
@@ -438,8 +429,7 @@ namespace vorpinventory_sv
 
         private void addBullets(int player, int weaponId, string bulletType, int cuantity)
         {
-            PlayerList pl = new PlayerList();
-            Player p = pl[player];
+            Player p = Players[player];
             string identifier = "steam:" + p.Identifiers["steam"];
 
             if (ItemDatabase.userWeapons.ContainsKey(weaponId))
@@ -458,8 +448,7 @@ namespace vorpinventory_sv
 
         private void subBullets(int player, int weaponId, string bulletType, int cuantity)
         {
-            PlayerList pl = new PlayerList();
-            Player p = pl[player];
+            Player p = Players[player];
             string identifier = "steam:" + p.Identifiers["steam"];
 
             if (ItemDatabase.userWeapons.ContainsKey(weaponId))
@@ -478,8 +467,7 @@ namespace vorpinventory_sv
 
         private void getItems(int source, CallbackDelegate funcion, string item)
         {
-            PlayerList pl = new PlayerList();
-            Player p = pl[source];
+            Player p = Players[source];
             string identifier = "steam:" + p.Identifiers["steam"];
             if (ItemDatabase.usersInventory.ContainsKey(identifier))
             {
@@ -497,9 +485,7 @@ namespace vorpinventory_sv
         {
             try
             {
-                PlayerList pl = new PlayerList();
-
-                if (pl[player] == null)
+                if (Players[player] == null)
                 {
                     return;
                 }
@@ -510,7 +496,7 @@ namespace vorpinventory_sv
                     return;
                 }
 
-                Player p = pl[player];
+                Player p = Players[player];
                 bool added = false;
                 string identifier = "steam:" + p.Identifiers["steam"];
 
@@ -646,8 +632,7 @@ namespace vorpinventory_sv
                 return;
             }
 
-            PlayerList pl = new PlayerList();
-            Player p = pl[player];
+            Player p = Players[player];
             string identifier = "steam:" + p.Identifiers["steam"];
             if (ItemDatabase.usersInventory.ContainsKey(identifier))
             {
@@ -670,14 +655,13 @@ namespace vorpinventory_sv
 
         private void registerWeapon(int target, string name, ExpandoObject ammos, ExpandoObject components)//Needs dirt level
         {
-            PlayerList pl = new PlayerList();
             Player p = null;
             bool targetIsPlayer = false;
-            foreach (Player pla in pl)
+            foreach (Player pla in Players)
             {
                 if (int.Parse(pla.Handle) == target)
                 {
-                    p = pl[target];
+                    p = Players[target];
                     targetIsPlayer = true;
                 }
             }
@@ -738,11 +722,10 @@ namespace vorpinventory_sv
         }
         private void giveWeapon(int player, int weapId, int target)
         {
-            PlayerList pl = new PlayerList();
-            Player p = pl[player];
+            Player p = Players[player];
             Player ptarget = null;
             bool targetIsPlayer = false;
-            foreach (Player pla in pl)
+            foreach (Player pla in Players)
             {
                 if (int.Parse(pla.Handle) == target)
                 {
@@ -752,7 +735,7 @@ namespace vorpinventory_sv
 
             if (targetIsPlayer)
             {
-                ptarget = pl[target];
+                ptarget = Players[target];
             }
             string identifier = "steam:" + p.Identifiers["steam"];
             dynamic CoreUser = vorpinventory_sv.CORE.getUser(player).getUsedCharacter;
@@ -788,8 +771,7 @@ namespace vorpinventory_sv
 
         private void subWeapon(int player, int weapId)
         {
-            PlayerList pl = new PlayerList();
-            Player p = pl[player];
+            Player p = Players[player];
 
             dynamic CoreUser = vorpinventory_sv.CORE.getUser(player).getUsedCharacter;
             int charIdentifier = CoreUser.charIdentifier;

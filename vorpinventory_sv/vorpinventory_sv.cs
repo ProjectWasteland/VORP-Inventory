@@ -79,8 +79,7 @@ namespace vorpinventory_sv
         private async void giveMoneyToPlayer([FromSource]Player source, int target, double amount)
         {
             int _source = int.Parse(source.Handle);
-            PlayerList pl = new PlayerList();
-            Player _target = pl[target];
+            Player _target = Players[target];
 
             dynamic UserCharacter = vorpinventory_sv.CORE.getUser(_source).getUsedCharacter;
 
@@ -160,8 +159,7 @@ namespace vorpinventory_sv
         //Sub items for other scripts
         private void subItem(int player, string name, int cuantity)
         {
-            PlayerList pl = new PlayerList();
-            Player p = pl[player];
+            Player p = Players[player];
             string identifier = "steam:" + p.Identifiers["steam"];
             if (ItemDatabase.usersInventory.ContainsKey(identifier))
             {
@@ -185,8 +183,7 @@ namespace vorpinventory_sv
         //For other scripts add items
         private void addItem(int player, string name, int cuantity)
         {
-            PlayerList pl = new PlayerList();
-            Player p = pl[player];
+            Player p = Players[player];
             string identifier = "steam:" + p.Identifiers["steam"];
             if (ItemDatabase.usersInventory.ContainsKey(identifier))
             {
@@ -223,8 +220,7 @@ namespace vorpinventory_sv
 
         private void addWeapon(int player, int weapId)
         {
-            PlayerList pl = new PlayerList();
-            Player p = pl[player];
+            Player p = Players[player];
             string identifier = "steam:" + p.Identifiers["steam"];
             if (ItemDatabase.userWeapons.ContainsKey(weapId))
             {
@@ -240,8 +236,7 @@ namespace vorpinventory_sv
 
         private void subWeapon(int player, int weapId)
         {
-            PlayerList pl = new PlayerList();
-            Player p = pl[player];
+            Player p = Players[player];
             string identifier = "steam:" + p.Identifiers["steam"];
             if (ItemDatabase.userWeapons.ContainsKey(weapId))
             {
@@ -409,8 +404,7 @@ namespace vorpinventory_sv
 
         private void serverGiveWeapon([FromSource] Player source, int weaponId, int target)
         {
-            PlayerList pl = new PlayerList();
-            Player p = pl[target];
+            Player p = Players[target];
             string identifier = "steam:" + source.Identifiers["steam"];
 
             if (ItemDatabase.userWeapons.ContainsKey(weaponId))
@@ -424,8 +418,7 @@ namespace vorpinventory_sv
         private void serverGiveItem([FromSource] Player source, string itemname, int amount, int target)
         {
             bool give = true;
-            PlayerList pl = new PlayerList();
-            Player p = pl[target];
+            Player p = Players[target];
             string identifier = "steam:" + source.Identifiers["steam"];
             string targetIdentifier = "steam:" + p.Identifiers["steam"];
 
