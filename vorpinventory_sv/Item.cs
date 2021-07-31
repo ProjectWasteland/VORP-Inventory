@@ -1,76 +1,68 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace vorpinventory_sv
 {
     public class Item
     {
-        private string name;
-        private string label;
-        private string type;
-        private string model;
+        public string Name { get; set; }
 
-        private int count;
-        private int limit;
+        public string Label { get; set; }
 
-        private double weight;
+        public string Type { get; set; }
 
-        private bool canUse;
-        private bool canRemove;
-        private bool dropOnDeath;
+        public string Model { get; set; }
 
-        public Item(string name, string label, string type, string model, int count, int limit, double weight, bool canUse, bool canRemove, bool dropOnDeath)
+        public int Count { get; set; }
+
+        public int Limit { get; set; }
+
+        public double Weight { get; set; }
+
+        public bool CanUse { get; set; }
+
+        public bool CanRemove { get; set; }
+
+        public bool DropOnDeath { get; set; }
+
+        public Item(string name, string label, string type, string model, int count, int limit, double weight,
+                    bool canUse, bool canRemove, bool dropOnDeath)
         {
-            this.name = name;
-            this.label = label;
-            this.type = type;
-            this.model = model;
-            this.count = count;
-            this.limit = limit;
-            this.weight = weight;
-            this.canUse = canUse;
-            this.canRemove = canRemove;
-            this.dropOnDeath = dropOnDeath;
+            this.Name = name;
+            this.Label = label;
+            this.Type = type;
+            this.Model = model;
+            this.Count = count;
+            this.Limit = limit;
+            this.Weight = weight;
+            this.CanUse = canUse;
+            this.CanRemove = canRemove;
+            this.DropOnDeath = dropOnDeath;
         }
-
-        public string Name { get => name; set => name = value; }
-        public string Label { get => label; set => label = value; }
-        public string Type { get => type; set => type = value; }
-        public string Model { get => model; set => model = value; }
-        public int Count { get => count; set => count = value; }
-        public int Limit { get => limit; set => limit = value; }
-        public double Weight { get => weight; set => weight = value; }
-        public bool CanUse { get => canUse; set => canUse = value; }
-        public bool CanRemove { get => canRemove; set => canRemove = value; }
-        public bool DropOnDeath { get => dropOnDeath; set => dropOnDeath = value; }
 
         public object getItemDictionary()
         {
-            Dictionary<string, object> itemDic = new Dictionary<string, object>()
+            var itemDic = new Dictionary<string, object>
             {
-                {"label", Label},
-                {"name", Name},
-                {"model", Model},
-                {"type", Type},
-                {"count", Count},
-                {"limit", Limit},
-                {"usable", CanUse},
-                {"weight", Weight}
+                    { "label", Label },
+                    { "name", Name },
+                    { "model", Model },
+                    { "type", Type },
+                    { "count", Count },
+                    { "limit", Limit },
+                    { "usable", CanUse },
+                    { "weight", Weight }
             };
             return itemDic;
         }
 
         public void addCount(int cuantity)
         {
-            this.count += cuantity;
+            Count += cuantity;
         }
 
         public void delCount(int cuantity)
         {
-            this.count -= cuantity;
+            Count -= cuantity;
         }
     }
 }

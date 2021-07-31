@@ -1,32 +1,29 @@
-﻿using CitizenFX.Core;
-using CitizenFX.Core.Native;
-using Newtonsoft.Json.Linq;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Dynamic;
 using System.Globalization;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using CitizenFX.Core;
+using CitizenFX.Core.Native;
+using Newtonsoft.Json.Linq;
 
 namespace vorpinventory_cl
 {
-    class GetConfig : BaseScript
+    internal class GetConfig : BaseScript
     {
         public static JObject Config = new JObject();
         public static Dictionary<string, string> Langs = new Dictionary<string, string>();
-        public static uint openKey = 0;
-        public static bool loaded = false;
+        public static uint openKey;
+        public static bool loaded;
 
         public GetConfig()
         {
-            EventHandlers[$"{API.GetCurrentResourceName()}:SendConfig"] += new Action<string, ExpandoObject>(LoadDefaultConfig);
+            EventHandlers[$"{API.GetCurrentResourceName()}:SendConfig"] +=
+                    new Action<string, ExpandoObject>(LoadDefaultConfig);
             TriggerServerEvent($"{API.GetCurrentResourceName()}:getConfig");
         }
 
         private void LoadDefaultConfig(string dc, ExpandoObject dl)
         {
-
             Config = JObject.Parse(dc);
 
             foreach (var l in dl)
@@ -47,7 +44,8 @@ namespace vorpinventory_cl
             {
                 value = value.Substring(2);
             }
-            return (uint)Int32.Parse(value, NumberStyles.HexNumber);
+
+            return (uint)int.Parse(value, NumberStyles.HexNumber);
         }
     }
 }

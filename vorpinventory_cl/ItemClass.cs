@@ -2,13 +2,13 @@
 {
     public class ItemClass
     {
-        int count;//ammo in case of weapon, cuantity in case of item
-        int limit;
-        string label;
-        string name;
-        string type;//weapon or item
-        bool usable;
-        bool canRemove;
+        private bool canRemove;
+        private int count; //ammo in case of weapon, cuantity in case of item
+        private string label;
+        private int limit;
+        private string name;
+        private string type; //weapon or item
+        private bool usable;
 
         public ItemClass(int count, int limit, string label, string name, string type, bool usable, bool canRemove)
         {
@@ -28,7 +28,7 @@
 
         public int getCount()
         {
-            return this.count;
+            return count;
         }
 
         public void quitCount(int count)
@@ -53,7 +53,7 @@
 
         public int getLimit()
         {
-            return this.limit;
+            return limit;
         }
 
         public void setLabel(string label)
@@ -63,7 +63,7 @@
 
         public string getLabel()
         {
-            return this.label;
+            return label;
         }
 
         public void setName(string name)
@@ -73,7 +73,7 @@
 
         public string getName()
         {
-            return this.name;
+            return name;
         }
 
         public void setType(string type)
@@ -83,7 +83,7 @@
 
         public string getType()
         {
-            return this.type;
+            return type;
         }
 
         public void setUsable(bool usable)
@@ -93,7 +93,7 @@
 
         public bool getUsable()
         {
-            return this.usable;
+            return usable;
         }
 
         public void setCanRemove(bool canRemove)
@@ -103,7 +103,7 @@
 
         public bool getCanRemove()
         {
-            return this.canRemove;
+            return canRemove;
         }
     }
 }

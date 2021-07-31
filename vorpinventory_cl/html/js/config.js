@@ -1,2 +1,2 @@
-var Config = new Object();
+var Config = {};
 Config.closeKeys = [113, 27];

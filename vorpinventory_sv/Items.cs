@@ -4,14 +4,14 @@ namespace vorpinventory_sv
 {
     public class Items
     {
-        private string item;
-        private string label;
-        private int limit;
-        private bool can_remove;
+        private readonly bool can_remove;
+        private readonly string item;
+        private readonly string label;
+        private readonly int limit;
         private string type;
         private bool usable;
 
-        public Items(string item, string label, int limit, bool can_remove,string type,bool usable)
+        public Items(string item, string label, int limit, bool can_remove, string type, bool usable)
         {
             this.item = item;
             this.limit = limit;
@@ -23,17 +23,17 @@ namespace vorpinventory_sv
 
         public bool getUsable()
         {
-            return this.usable;
+            return usable;
         }
 
         public void setUsable(bool usable)
         {
             this.usable = usable;
         }
-        
+
         public string getType()
         {
-            return this.type;
+            return type;
         }
 
         public void setType(string type)
@@ -43,33 +43,34 @@ namespace vorpinventory_sv
 
         public string getName()
         {
-            return this.item;
+            return item;
         }
 
         public string getLabel()
         {
-            return this.label;
+            return label;
         }
 
         public int getLimit()
         {
-            return this.limit;
+            return limit;
         }
 
         public bool getCanRemove()
         {
-            return this.can_remove;
+            return can_remove;
         }
+
         public Dictionary<string, object> getItemDictionary()
         {
-            Dictionary<string, object> dictionary = new Dictionary<string, object>()
+            var dictionary = new Dictionary<string, object>
             {
-                {"name", item},
-                {"label", label},
-                {"limit", limit},
-                {"can_remove", can_remove},
-                {"type", type},
-                {"usabel", usable}
+                    { "name", item },
+                    { "label", label },
+                    { "limit", limit },
+                    { "can_remove", can_remove },
+                    { "type", type },
+                    { "usabel", usable }
             };
             return dictionary;
         }
